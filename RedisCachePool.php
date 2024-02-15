@@ -51,7 +51,13 @@ class RedisCachePool extends AbstractCachePool implements HierarchicalPoolInterf
      */
     protected function fetchObjectFromCache($key)
     {
-        if (false === $result = unserialize($this->cache->get($this->getHierarchyKey($key)))) {
+        $result = $this->cache->get($this->getHierarchyKey($key));
+
+        if (gettype($result) === 'string') {
+            $result = unserialize($result);
+        }
+
+        if (false === $result) {
             return [false, null, [], null];
         }
 
