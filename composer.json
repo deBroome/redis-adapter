@@ -1,5 +1,5 @@
 {
-    "name": "cache/redis-adapter",
+    "name": "debroome/redis-adapter",
     "description": "A PSR-6 cache implementation using Redis (PhpRedis). This implementation supports tags",
     "license": "MIT",
     "type": "library",
