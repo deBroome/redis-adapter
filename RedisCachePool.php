@@ -29,10 +29,12 @@ class RedisCachePool extends AbstractCachePool implements HierarchicalPoolInterf
      */
     protected $cache;
 
+    private $logger;
+
     /**
      * @param \Redis|\RedisArray|\RedisCluster $cache
      */
-    public function __construct($cache)
+    public function __construct($cache, $log)
     {
         if (!$cache instanceof \Redis
             && !$cache instanceof \RedisArray
@@ -43,6 +45,7 @@ class RedisCachePool extends AbstractCachePool implements HierarchicalPoolInterf
             );
         }
 
+        $this->logger = $log->getLogger();
         $this->cache = $cache;
     }
 
@@ -58,6 +61,7 @@ class RedisCachePool extends AbstractCachePool implements HierarchicalPoolInterf
         }
 
         if (gettype($result) === 'string') {
+            $this->logger->info(print_r($result, true));
             $result = unserialize($result);
         }
 
